@@ -2,7 +2,7 @@
   <div class="login">
     <div class="container d-flex flex-column align-items-center">
       <div class="box">
-        <h1 class="p-1">Login</h1>
+        <h1 class="p-1">Register</h1>
         <div class="d-flex justify-content-center">
           <form>
             <div>
@@ -18,14 +18,14 @@
               <input
                 class="textbox"
                 v-model="password"
-                placeholder="輸入密碼"
+                placeholder="輸入密碼，8字以上"
               />
             </div>
             <div class="d-flex justify-content-end">
-              <router-link :to="'/register'">create account</router-link>
+              <router-link :to="'/login'">sign in</router-link>
             </div>
             <div class="error">{{ errorMsg }}</div>
-            <button @click="dologin" class="button my-5">登入</button>
+            <button @click="doRegister" class="button my-5">註冊</button>
           </form>
         </div>
       </div>
@@ -45,11 +45,11 @@ export default {
     };
   },
   methods: {
-    dologin: function () {
-      console.log("doLogin");
-      console.log(this.$store.state.dbapi + "login");
+    doRegister: function () {
+      console.log("Register");
+      console.log(this.$store.state.dbapi + "create_accounts");
       axios
-        .post(this.$store.state.dbapi + "login", {
+        .post(this.$store.state.dbapi + "create_accounts", {
           username: this.username,
           password: this.password,
         })

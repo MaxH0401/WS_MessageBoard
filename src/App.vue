@@ -1,7 +1,6 @@
 <template>
-  <nav>
+  <nav class="shadow">
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
     <router-link to="/login">Login</router-link> |
     <router-link to="/messageboard">MessageBoard</router-link>
   </nav>
@@ -18,7 +17,9 @@
 }
 
 nav {
-  padding: 30px;
+  padding: 15px;
+  background-color: #93b7c7;
+  margin-bottom: 2rem;
 }
 
 nav a {
@@ -27,6 +28,6 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #ffffff;
 }
 </style>
