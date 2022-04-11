@@ -58,8 +58,8 @@ export default {
           if (response.data === "success") {
             localStorage.setItem('userName', this.username);
             alert("登入成功!");
+            //未做noLogin改變
             this.$router.push('/messageboard');
-            //尚未做好props
           } else {
             this.errorMsg = "帳號或密碼輸入錯誤";
           }

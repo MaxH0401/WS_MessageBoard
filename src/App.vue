@@ -4,10 +4,10 @@
   >
     <router-link to="/" class="logo">後端功能演示</router-link>
     <div>
-      <a class="mx-5" @click="toMsgBoard">留言板</a>
-      <router-link to="/login">Hi! {{ username }}</router-link> |
-      <a href="" v-if="notLogin">Login</a>
-      <a href="" v-if="!notLogin" @click="doLogout">Logout</a>
+      <a class="mx-5" @click="toMsgBoard">Message Board</a>
+      <router-link v-if="!notLogin" to="/login">Hi! {{ username }} |</router-link> 
+      <router-link v-if="notLogin" to="/login">Login</router-link>
+      <a href=""  @click="doLogout">Logout</a>
     </div>
   </nav>
   <router-view />
@@ -34,13 +34,12 @@ export default {
     doLogout: function () {
       localStorage.removeItem("userName");
       this.notLogin =  true;
-      this.$router.push("/");
+      this.$router.path("/");
     },
   },
   mounted() {
     var username = localStorage.getItem("userName");
-    // console.log(username)
-    this.username = username ? username : "未登入";
+    console.log("mounted:",username);
     this.notLogin = username ? false : true;
     //username是否存在，是則notLogin = false，反之則true
   },
