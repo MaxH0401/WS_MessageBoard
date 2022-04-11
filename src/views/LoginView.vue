@@ -56,7 +56,10 @@ export default {
         .then((response) => {
           console.log(response.data);
           if (response.data === "success") {
+            localStorage.setItem('userName', this.username);
             alert("登入成功!");
+            this.$router.push('/messageboard');
+            //尚未做好props
           } else {
             this.errorMsg = "帳號或密碼輸入錯誤";
           }
@@ -91,7 +94,6 @@ form {
   border-radius: 50px;
   border: 1px solid #266581;
   background-color: #266581;
-  padding-left: 8px;
   color: #ffffff;
 }
 
