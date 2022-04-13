@@ -33,6 +33,7 @@ export default {
     doLogout: function () {
       localStorage.removeItem("userName");
       this.$store.state.notLogin = true;
+      alert("已成功登出!");
       this.$router.path("/");
     },
   },

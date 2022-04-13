@@ -47,23 +47,28 @@ export default {
   },
   methods: {
     doRegister: function () {
-      console.log("Register");
-      console.log(this.$store.state.dbapi + "create_accounts");
-      axios
-        .post(this.$store.state.dbapi + "create_accounts", {
-          username: this.username,
-          password: this.password,
-        })
-        .then((response) => {
-          console.log(response.data);
-          if (response.data === "Create Account!") {
-            alert("已註冊");
-            this.$router.push('/login');
-          } else {
-            this.errorMsg = "意料外錯誤";
-          }
-        })
-        .catch((error) => console.log(error));
+      // console.log("Register");
+      if (this.password.length < 5) {
+        alert("請輸入5字以上密碼");
+      } else {
+        axios
+          .post(this.$store.state.dbapi + "create_accounts", {
+            username: this.username,
+            password: this.password,
+          })
+          .then((response) => {
+            // console.log(response.data);
+            if (response.data === "Create Account!") {
+              alert("已成功註冊!");
+              this.$router.push("/login");
+            } else if (response.data === "重複帳號") {
+              alert("該帳號已被使用!");
+            } else {
+              this.errorMsg = "意料外錯誤";
+            }
+          })
+          .catch((error) => console.log(error));
+      }
     },
   },
 };

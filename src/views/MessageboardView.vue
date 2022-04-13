@@ -1,20 +1,23 @@
 <template>
   <div class="messageboard">
     <div class="container d-flex flex-column align-items-center">
+      <h1 class="p-1">Message Board</h1>
       <div class="box">
-        <h1 class="p-1">Message Board</h1>
         <div class="d-flex justify-content-center">
           <form>
             <div class="row d-flex">
-              <div class="my-2 col-2">留言人</div>
-              <div class="my-2 col-6">{{ username }}</div>
+              <div class="m-2 col-2 fieldName">用戶名</div>
+              <div class="m-2 col-6">
+                {{ username }}
+              </div>
             </div>
             <div class="row">
-              <div class="my-2 col-12">留言</div>
-              <input class="textbox col-12" v-model="message" type="text" />
+              <div class="m-2 col-2 fieldName">留言</div>
+              <textarea class="m-2 textbox col-9" v-model="message" />
             </div>
-
-            <button @click="doMessage" class="button my-5">發表</button>
+            <div class="d-flex justify-content-center">
+              <button @click="doMessage" class="boardBtn my-1">發表</button>
+            </div>
           </form>
         </div>
       </div>
@@ -23,18 +26,29 @@
 
   <hr />
 
-  <ul class="list-group">
-    <li class="list-group-item msgcard m-2" v-for="msg in list" :key="msg.id">
-      
+  <ul class="list-group msgList">
+    <li
+      class=".list-group-item msgcard m-2 p-3"
+      v-for="msg in list"
+      :key="msg.id"
+    >
       <!-- <h2>ID:{{ msg.id }}</h2> -->
-      <h2>{{ msg.name }}</h2>
-      <div>{{ msg.message }}</div>
-
+      <div class="d-flex justify-content-between mb-2">
+        <h3 style="margin-bottom: 0px">發言人：{{ msg.name }}</h3>
+        <button @click="delMessage(msg.id)" class=" btn danger-button">
+          刪除留言
+        </button>
+      </div>
+      <div class="messageContent p-1">
+        <div>{{ msg.message }}</div>
+      </div>
+      <hr />
       <replyMessage :id="msg.id"> </replyMessage>
-      <button @click="delMessage(msg.id)" class="my-5">刪除留言</button>
     </li>
-    <div v-if="!this.list[0]" class="error">
-      沒有留言，或Server斷線可能要重開
+    <div class="d-flex justify-content-center">
+      <div v-if="!this.list[0]" class="error">
+        沒有留言，或Server斷線可能要重開
+      </div>
     </div>
   </ul>
 </template>
@@ -89,18 +103,35 @@ export default {
     },
   },
   mounted() {
-    axios
-      .get(this.$store.state.dbapi + "messageboard")
-      .then((response) => (this.list = response.data));
+    if (localStorage.getItem("userName") == null) {
+      alert("先登入吧!");
+      this.$router.push("/login");
+    } else {
+      axios
+        .get(this.$store.state.dbapi + "messageboard")
+        .then((response) => (this.list = response.data));
+    }
   },
 };
 </script>
 
 <style scoped>
+.messageboard {
+  text-align: start;
+}
+
+.msgList {
+  text-align: start;
+}
+
 h1 {
-  background-color: #266581;
-  color: #ffffff;
+  color: #266581;
   margin-bottom: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 900;
 }
 
 .box {
@@ -109,27 +140,30 @@ h1 {
   background-color: #e4eff5;
   border-radius: 8px;
   border: 2px solid #266581;
+  padding: 2rem;
 }
 
 form {
   width: 80vw;
 }
 
-.button {
-  width: 10rem;
-  border-radius: 50px;
+.boardBtn {
+  width: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: 8px;
   border: 1px solid #266581;
   background-color: #266581;
   color: #ffffff;
 }
 
-.button:hover {
+.boardBtn:hover {
   background-color: #1d4f64;
 }
 
 .textbox {
   /* width: 15rem; */
-  height: 5rem;
+  height: 20vh;
   border-radius: 8px;
   border: 1px solid #266581;
   padding-left: 8px;
@@ -142,6 +176,31 @@ form {
 .msgcard {
   background-color: #7ba7ba;
   border-radius: 8px;
+}
+
+.fieldName {
+  font-weight: 900;
+  border: 1px solid;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+}
+
+.messageContent {
+  background: #ffffff;
+  border-radius: 4px;
+}
+
+.btn {
+  margin: 0;
+  padding: 0;
+}
+
+.danger-button {
+  background-color: #ff0000;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #ffffff;
 }
 </style>
 

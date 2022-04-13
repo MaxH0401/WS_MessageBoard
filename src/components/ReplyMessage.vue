@@ -1,5 +1,5 @@
 <template>
-  <ul class="list-group">
+  <ul class="list-group ms-5">
     <li
       class="list-group-item"
       v-for="replymsg in replyList"
@@ -7,26 +7,51 @@
     >
       <!-- <h2>ID: {{ id }}</h2> -->
       <!-- <div>{{ replymsg.id }}</div> -->
-      <h2>{{ replymsg.name }}</h2>
-      <div>{{ replymsg.message }}</div>
-      <div v-if="!this.replyList[0].id">尚未回覆，立即回覆!</div>
-      <div>
-        <button v-if="this.replyList[0].id" @click="delMessage(replymsg.id)" class="button my-1">刪除回覆</button>
+      <div class="d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+          <h4 v-if="this.replyList[0].id">回覆人:</h4>
+          <h4 class="ms-1">{{ replymsg.name }}</h4>
+        </div>
+        <div>
+          <button
+            v-if="this.replyList[0].id"
+            @click="delMessage(replymsg.id)"
+            class="btn my-1 danger-button"
+          >
+            刪除
+          </button>
+        </div>
       </div>
+      <div class="replyBox p-1" v-if="this.replyList[0].id">
+        {{ replymsg.message }}
+      </div>
+      <div v-if="!this.replyList[0].id">尚未有任何回覆，寫下你的想法!</div>
     </li>
+    <button v-if="!this.messagebox" @click="openReplyBox" class="btn boardBtn">
+      回覆
+    </button>
+    <div class="my-1">
+      <div class="">
+        <input
+          v-if="this.messagebox"
+          type="text"
+          v-model="message"
+          placeholder="message"
+          style="width:60vw"
+        />
+   
+          <button
+          v-if="this.messagebox"
+          @click="doMessage"
+          class="btn conform-bottom my-1 mx-2"
+        >
+          留言!
+        </button>
+
+        
+      </div>
+    </div>
   </ul>
-  <button v-if="!this.messagebox" @click="openReplyBox" class="button my-1">
-    回覆
-  </button>
-  <input
-    v-if="this.messagebox"
-    type="text"
-    v-model="message"
-    placeholder="message"
-  />
-  <button v-if="this.messagebox" @click="doMessage" class="button my-1">
-    留言!
-  </button>
 </template>
 
 <script>
@@ -96,3 +121,49 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+h4 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.replyBox {
+  border: 1px solid #266581;
+  border-radius: 4px;
+}
+
+.btn {
+  margin: 0;
+  padding: 0;
+}
+
+.danger-button {
+  background-color: #ff0000;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #ffffff;
+}
+
+.conform-bottom {
+  background-color: #266581;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #ffffff;
+}
+
+.boardBtn {
+  width: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  border-radius: 0px 0px 4px 4px;
+  border: 1px solid #266581;
+  background-color: #266581;
+  color: #ffffff;
+}
+
+.boardBtn:hover {
+  background-color: #1d4f64;
+}
+</style>
