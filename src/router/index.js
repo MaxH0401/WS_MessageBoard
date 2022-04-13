@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import NavView from '../views/NavView.vue'
 import LoginView from '../views/LoginView.vue'
 import HomeView from '../views/HomeView.vue'
 import MessageboardView from '../views/MessageboardView.vue'
@@ -8,22 +9,34 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    components: {
+      default: HomeView,
+      nav: NavView
+    }
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    components: {
+      default: LoginView,
+      nav: NavView
+    }
   },
   {
     path: '/messageboard',
     name: 'messageboard',
-    component: MessageboardView
+    components: {
+      default: MessageboardView,
+      nav: NavView
+    }
   },
   {
     path: '/register',
     name: 'register',
-    component: RegisterView
+    components: {
+      default: RegisterView,
+      nav: NavView
+    }
   },
 ]
 
@@ -31,5 +44,6 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+
 
 export default router

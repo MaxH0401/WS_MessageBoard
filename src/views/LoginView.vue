@@ -19,6 +19,7 @@
                 class="textbox"
                 v-model="password"
                 placeholder="輸入密碼"
+                type="password"
               />
             </div>
             <div class="d-flex justify-content-end">
@@ -47,7 +48,6 @@ export default {
   methods: {
     dologin: function () {
       console.log("doLogin");
-      console.log(this.$store.state.dbapi + "login");
       axios
         .post(this.$store.state.dbapi + "login", {
           username: this.username,
@@ -57,8 +57,9 @@ export default {
           console.log(response.data);
           if (response.data === "success") {
             localStorage.setItem('userName', this.username);
+            console.log("LocalStorage :",localStorage.getItem("userName"))
             alert("登入成功!");
-            //未做noLogin改變
+            this.$store.state.notLogin =  false;
             this.$router.push('/messageboard');
           } else {
             this.errorMsg = "帳號或密碼輸入錯誤";

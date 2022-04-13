@@ -2,7 +2,8 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    dbapi: "https://wscart-server.herokuapp.com/"
+    dbapi: "https://wscart-server.herokuapp.com/",
+    notLogin : true
   },
   getters: {
   },

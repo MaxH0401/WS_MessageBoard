@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="register">
     <div class="container d-flex flex-column align-items-center">
       <div class="box">
         <h1 class="p-1">Register</h1>
@@ -10,7 +10,7 @@
               <input
                 class="textbox"
                 v-model="username"
-                placeholder="輸入帳號"
+                placeholder="請輸入帳號"
               />
             </div>
             <div>
@@ -18,7 +18,8 @@
               <input
                 class="textbox"
                 v-model="password"
-                placeholder="輸入密碼，8字以上"
+                placeholder="輸入密碼，5字以上"
+                type="password"
               />
             </div>
             <div class="d-flex justify-content-end">
@@ -55,10 +56,11 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
-          if (response.data === "success") {
-            alert("登入成功!");
+          if (response.data === "Create Account!") {
+            alert("已註冊");
+            this.$router.push('/login');
           } else {
-            this.errorMsg = "帳號或密碼輸入錯誤";
+            this.errorMsg = "意料外錯誤";
           }
         })
         .catch((error) => console.log(error));
